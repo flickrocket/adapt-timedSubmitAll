@@ -1,0 +1,5 @@
+    // To go in articles.json
+    "_timedSubmitAll": {
+        "_isEnabled": true,
+        "_insertAfterBlock": ""
+    }

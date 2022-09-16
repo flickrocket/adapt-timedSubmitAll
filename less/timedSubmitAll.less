@@ -1,0 +1,34 @@
+.no-submit-buttons {
+  .btn__container {
+    display: none;
+  }
+}
+
+.timed-submit-all {
+  .btn__container {
+    display: block;
+  }
+
+  .btn__action {
+    width: @device-width-large;
+    margin: 0 auto;
+  }
+}
+
+.timed-submit-all-done {
+  padding: 1rem 1rem 1rem 3.5rem;
+  color: white;
+  background-color: cornflowerblue;
+}
+
+.timed-submit-remaining-time {
+  padding: 1rem ;
+  color: black;
+  background-color:burlywood;
+  text-align: center;
+  position: fixed;
+  top:0;
+  left:50%;
+  transform: translate(-50%, 0);
+  z-index: 81;
+}

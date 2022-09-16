@@ -1,0 +1,17 @@
+{
+  "name": "adapt-timedSubmitAll",
+
+  "version": "3.0.14",
+  "framework": ">=5.8",
+  
+  "extension": "timedSubmitAll",
+  "displayName": "Timed Submit All",
+  "description": "Extension to allow multiple questions to be submitted via a single submit button. Auto submits after an externally communicated time.",
+  "main": "/js/adapt-timedSubmitAll.js",
+  "keywords": [
+    "adapt-plugin",
+    "adapt-extension"
+  ],
+  "license": "GPL-3.0",
+  "targetAttribute": "_timedSubmitAll"
+}

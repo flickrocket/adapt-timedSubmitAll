@@ -1,0 +1,66 @@
+{
+  "type": "object",
+  "$schema": "http://json-schema.org/draft-03/schema",
+  "id": "http://jsonschema.net",
+  "required": false,
+  "properties": {
+    "pluginLocations": {
+      "type": "object",
+      "required": true,
+      "properties": {
+        "config": {
+          "type": "object"
+        },
+        "course": {
+          "type": "object"
+        },
+        "contentobject": {
+          "type": "object"
+        },
+        "article": {
+          "type": "object",
+          "properties": {
+            "_timedSubmitAll": {
+              "type": "object",
+              "required": false,
+              "legend": "Timed Submit All",
+              "properties": {
+                "_isEnabled": {
+                  "type": "boolean",
+                  "required": true,
+                  "default": false,
+                  "title": "Enabled?",
+                  "inputType": "Checkbox",
+                  "validators": []
+                },
+                "_insertAfterBlock": {
+                  "type": "string",
+                  "required": false,
+                  "title": "Insert Submit after block",
+                  "inputType": "Text",
+                  "validators": [],
+                  "help": "If you want the submit button to be appended to a specific block within this article, insert its ID here. Leave blank to default to the last block in the article."
+                },
+                "_timerAmount": {
+                  "type": "number",
+                  "required": false,
+                  "title": "Seconds",
+                  "inputType": "Number",
+                  "default": 30,
+                  "help": "The time allowed for completion. Only used for testing and will be overrided by LMS in Flickrocket live usage",
+                  "validators": ["number"]
+                }
+              }
+            }
+          }
+        },
+        "block": {
+          "type": "object"
+        },
+        "component": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}
