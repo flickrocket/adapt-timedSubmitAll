@@ -1,7 +1,7 @@
 {
   "name": "adapt-timedSubmitAll",
 
-  "version": "3.0.14",
+  "version": "3.0.15",
   "framework": ">=5.8",
   
   "extension": "timedSubmitAll",

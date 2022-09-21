@@ -37,14 +37,15 @@ define([
         
         window.remainingTimeIsSet = true;
         
-        var intervalId = setInterval(() => {
+        window.scormIntervalId = setInterval(() => {
           seconds--;
           this.showRemainingTime(seconds);
         }, 1000);
 
         // Debug timeout: submit after 10 seconds
-        let timeout = setTimeout(() => {
-          clearInterval(intervalId); // Clear periodic remaining time update
+        window.scormTimeout = setTimeout(() => {
+          clearTimeout(window.scormTimeout);
+          clearInterval(window.scormIntervalId); // Clear periodic remaining time update
           this.autoSubmit();
         }, seconds * 1000);
 
@@ -152,23 +153,32 @@ define([
       });
 
       // Finish submit
-      this.enableTimedSubmitAllButton(false);
-      this.model.set('_isSubmitted', true);
-      Adapt.trigger('timedSubmitAll:submitted', this.model.get('_componentViews'));
-
       let submitAllButtonContainer = $(".btn__response-container");
       submitAllButtonContainer.hide();
 
       let autosSubmitDonePanel = $(".autosubmit_done_panel");
       autosSubmitDonePanel.show();
 
-      let remainingTime = $(".autoSubmitTimer");
-      remainingTime.hide();
+      this.afterSubmit();
 
       // Scroll to end of page
       window.setTimeout(function(){
         $("html, body").animate({ scrollTop: $(document).height() }, 500);
       }, 1000);
+
+    },
+
+    afterSubmit: function() {
+
+      this.model.set('_isSubmitted', true);
+      Adapt.trigger('timedSubmitAll:submitted', this.model.get('_componentViews'));
+
+      // Disable submit button
+      this.enableTimedSubmitAllButton(false);
+
+      // Hide remaining time
+      let remainingTime = $(".autoSubmitTimer");
+      remainingTime.hide();
 
       // Notify submit complete
       if (window.opener) {
@@ -177,6 +187,10 @@ define([
       if (window.parent) {
         window.parent.postMessage('scormTimedSubmitAllSubmitted', '*');
       }
+
+      // Disable interval and timeout
+      clearInterval(window.scormIntervalId);
+      clearTimeout(window.scormTimeout);
     },
 
     render: function() {
@@ -274,20 +288,7 @@ define([
 
     onTimedSubmitAllButtonClicked: function() {
       this.model.get('_componentViews').forEach(view => view.$el.find('.js-btn-action').trigger('click'));
-
-      this.enableTimedSubmitAllButton(false);
-
-      this.model.set('_isSubmitted', true);
-
-      Adapt.trigger('timedSubmitAll:submitted', this.model.get('_componentViews'));
-
-      // Notify submit complete
-      if (window.opener) {
-        window.opener.postMessage('scormTimedSubmitAllSubmitted', '*');
-      }
-      if (window.parent) {
-        window.parent.postMessage('scormTimedSubmitAllSubmitted', '*');
-      }
+      this.afterSubmit();
     }
   });
 
